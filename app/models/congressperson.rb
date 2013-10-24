@@ -1,6 +1,7 @@
 class Congressperson < ActiveRecord::Base
 
-  validates
+  validates :title, :inclusion => { :in => %w(Sen. Rep.)}
+  validates :state, :format => { :with => /\A\w{2}\z/ }
 
   attr_reader :title, :firstname, :middlename, :lastname, :name_suffix, :nickname, :party, :state,
               :district, :in_office, :gender

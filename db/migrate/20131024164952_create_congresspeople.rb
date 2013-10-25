@@ -2,6 +2,7 @@ class CreateCongresspeople < ActiveRecord::Migration
   def change
     create_table :congresspeople do |t|
       t.belongs_to :state
+      t.string :type
       t.string :title
       t.string :firstname
       t.string :middlename
@@ -27,7 +28,6 @@ class CreateCongresspeople < ActiveRecord::Migration
       t.string :youtube_url
       t.string :facebook_id
       t.string :official_rss
-      t.string :senate_class
       t.date :birthdate
       t.timestamps
     end

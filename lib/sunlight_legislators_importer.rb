@@ -1,6 +1,8 @@
 require 'csv'
 require_relative '../app/models/congressperson'
 require_relative '../app/models/state'
+require_relative '../app/models/senator'
+require_relative '../app/models/representative'
 
 class SunlightLegislatorsImporter
   def self.import(filename)

@@ -20,7 +20,11 @@ class SunlightLegislatorsImporter
         end
       end
       new_state = State.create(name: state_name)
-      new_state.congresspeople.create(attributes)
+      State.find_each do |state|
+        if state.name == state_name
+          state.congresspeople.create(attributes)
+        end
+      end
     end
   end
 end

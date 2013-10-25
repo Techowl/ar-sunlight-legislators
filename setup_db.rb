@@ -1,4 +1,5 @@
 require_relative 'app/models/congressperson'
+require_relative 'app/models/state'
 
 print "Creating database..."
 %x(rake db:create)

@@ -1,13 +1,17 @@
 require 'csv'
 require_relative '../app/models/congressperson'
+require_relative '../app/models/state'
 
 class SunlightLegislatorsImporter
   def self.import(filename)
     csv = CSV.new(File.open(filename), :headers => true)
     csv.each do |row|
       attributes = {}
+      state_name = nil
       row.each do |field, value|
         case field
+        when 'state'
+          state_name = value
         when 'phone'
           value = value.scan(/\d/).join.to_i
           attributes[field.to_sym] = value
@@ -15,7 +19,8 @@ class SunlightLegislatorsImporter
           attributes[field.to_sym] = value
         end
       end
-      Congressperson.create(attributes)
+      new_state = State.create(name: state_name)
+      new_state.congresspeople.create(attributes)
     end
   end
 end

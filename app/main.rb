@@ -53,6 +53,26 @@ def percentage_by_gender(gender)
   end
 end
 
+def num_legislators_by_state
+  state_results = []
+  State.find_each do |state|
+    sens = 0
+    reps = 0
+    state.congresspeople.each do |congressperson|
+      if congressperson.in_office == '1'
+        sens += 1 if congressperson.title == 'Sen'
+        reps += 1 if congressperson.title == 'Rep'
+      end
+    end
+    state_results << [state.name, sens, reps]
+  end
+  partly_sorted = state_results.sort_by {|name, sens, reps| sens + reps }
+  sorted = partly_sorted.reverse
+  sorted.each do |name, sens, reps|
+    puts "#{name}: #{sens} Senators, #{reps} Representative(s)" if reps > 0
+  end
+end
+
 def sen_rep_counter
   sens = 0
   reps = 0
@@ -64,7 +84,15 @@ def sen_rep_counter
   puts "Representatives: #{reps}"
 end
 
-# sen_rep_counter
+def delete_inactive_legislators
+  Congressperson.destroy_all(:in_office => '0')
+end
+
+
+
 # percentage_by_gender('male')
 # legislators_by_state('CA')
+# num_legislators_by_state
+# sen_rep_counter
+# delete_inactive_legislators
 
